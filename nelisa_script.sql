@@ -23,6 +23,7 @@ create table  Suppliers (id int not null primary key auto_increment,
 create table  Sales (id int not null primary key auto_increment, 
 							date date, 
 							product_id int, 
+							product_name varchar(35),
 							no_sold int, 
 							selling_price decimal(10,2),
 							foreign key (product_id) references Products(id)

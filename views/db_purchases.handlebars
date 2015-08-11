@@ -1,0 +1,22 @@
+<h1>Purchases</h1>
+<table class="table">
+	<tr>
+		<td>
+			Purchases
+		</td>
+	</tr>
+{{#products}}
+  <tr>
+  	<td>
+  		{{supplier_id}}
+  	</td>
+  	<td>
+  		<a href="/Purchases/edit/{{id}}">Edit</a>
+  	</td>
+  	<td>
+  		<a href="/Purchases/delete/{{id}}">Delete</a>	
+  	</td>
+
+  </tr>
+{{/products}}
+</table>

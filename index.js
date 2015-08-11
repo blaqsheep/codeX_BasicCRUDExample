@@ -40,6 +40,6 @@ app.post('/products/add', products.add);
 app.get('/products/delete/:id', products.delete);
 
 //start everything up
-app.listen(3000, function () {
-    console.log('express-handlebars example server listening on: 3000');
+app.listen(8080, function () {
+    console.log('express-handlebars example server listening on: 8080');
 });

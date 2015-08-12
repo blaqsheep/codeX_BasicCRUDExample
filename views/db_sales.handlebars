@@ -1,0 +1,22 @@
+<h1>Sales</h1>
+<table class="table">
+	<tr>
+		<td>
+			Sales
+		</td>
+	</tr>
+{{#products}}
+  <tr>
+  	<td>
+  		{{name}}
+  	</td>
+  	<td>
+  		<a href="/Suppliers/edit/{{id}}">Edit</a>
+  	</td>
+  	<td>
+  		<a href="/Suppliers/delete/{{id}}">Delete</a>	
+  	</td>
+
+  </tr>
+{{/products}}
+</table>

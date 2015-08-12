@@ -2,14 +2,16 @@
 <table class="table">
 	<tr>
 		<td>
-			Product Name
+			<h2>Product Name</h2>
 		</td>
+		<td><h2>Category Name</h2></td>
 	</tr>
 {{#products}}
   <tr>
   	<td>
-  		{{name}}
+  		{{ProductName}}
   	</td>
+  	<td>{{CategoryName}}</td>
   	<td>
   		<a href="/Products/edit/{{id}}">Edit</a>
   	</td>

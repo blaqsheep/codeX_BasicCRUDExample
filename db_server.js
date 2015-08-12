@@ -79,7 +79,7 @@ app.get('/Purchases', db_purchases.show);
 */
 
 // start the server
-app.listen(3000, function (){
-	console.log('Server started! At http://localhost: 3000');
+app.listen(8080, function (){
+	console.log('Server started! At http://localhost: 8080');
 
 });

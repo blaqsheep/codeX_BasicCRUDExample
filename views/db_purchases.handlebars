@@ -2,14 +2,32 @@
 <table class="table">
 	<tr>
 		<td>
-			Purchases
+			<h3>ProductName</h3>
 		</td>
+    <td>
+      <h3>SupplierName</h3>
+    </td>
+    <td>
+      <h3>Quantity</h3>
+    </td>
+    <td>
+      <h3>Total_Cost</h3>
+    </td>
 	</tr>
 {{#products}}
   <tr>
-  	<td>
-  		{{supplier_id}}
-  	</td>
+        <td>
+      {{ProductName}}
+        </td>
+      	<td>
+  		{{SupplierName}}
+  	   </td>
+        <td>
+      {{Quantity}}
+       </td>
+        <td>
+      {{Total_Cost}}
+       </td>
   	<td>
   		<a href="/Purchases/edit/{{id}}">Edit</a>
   	</td>

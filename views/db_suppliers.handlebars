@@ -1,15 +1,36 @@
 <h1>Suppliers</h1>
+
+<a href="suppliers/add">Add Suppliers</a>
+
 <table class="table">
 	<tr>
 		<td>
-			Suppliers Name
+		<h5>Suppliers Name</h5>	
 		</td>
+    <td>
+     <h5>Product Name</h5> 
+    </td>
+    <td>
+    <h5>Category Name</h5>  
+    </td>
+    <td>
+      <h5>Quantity Bought</h5>
+    </td>
 	</tr>
 {{#products}}
   <tr>
   	<td>
-  		{{name}}
+  		{{SupplierName}}
   	</td>
+    <td>
+      {{ProductName}}
+    </td>
+    <td>
+      {{CategoryName}}
+    </td>
+    <td>
+      {{Quantity}}
+    </td>
   	<td>
   		<a href="/Suppliers/edit/{{id}}">Edit</a>
   	</td>

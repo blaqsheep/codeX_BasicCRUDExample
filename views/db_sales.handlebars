@@ -1,20 +1,47 @@
 <h1>Sales</h1>
+
+<a href="sales/add">Add Sales</a>
+
 <table class="table">
 	<tr>
-		<td>
-			Sales
-		</td>
+    <td>
+    <h4>Date</h4>  
+    </td>
+    <td>
+      <h4>Product Name</h4>
+    </td>
+    <td>
+      <h4>Category Name</h4>
+    </td>
+    <td>
+      <h4>Sold Number</h4>
+    </td>
+    <td>
+     <h4>Selling Price</h4> 
+    </td>
 	</tr>
 {{#products}}
   <tr>
+      <td>
+      {{Date}}
+    </td>
+      <td>
+      {{ProductName}}
+    </td>
+    <td>
+      {{CategoryName}}
+    </td>
+      <td>
+      {{SoldNumber}}
+    </td>
+      <td>
+      {{SellingPrice}}
+    </td>
   	<td>
-  		{{name}}
+  		<a href="/Sales/edit/{{id}}">Edit</a>
   	</td>
   	<td>
-  		<a href="/Suppliers/edit/{{id}}">Edit</a>
-  	</td>
-  	<td>
-  		<a href="/Suppliers/delete/{{id}}">Delete</a>	
+  		<a href="/Sales/delete/{{id}}">Delete</a>	
   	</td>
 
   </tr>

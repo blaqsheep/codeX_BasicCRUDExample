@@ -1,6 +1,7 @@
 <h1>Suppliers</h1>
 
 <a href="suppliers/add">Add Suppliers</a>
+<a href="/">Home</a>
 
 <table class="table">
 	<tr>
@@ -8,34 +9,34 @@
 		<h5>Suppliers Name</h5>	
 		</td>
     <td>
-     <h5>Product Name</h5> 
+     <!-- <h5>Product Name</h5>  -->
     </td>
     <td>
-    <h5>Category Name</h5>  
+    <!-- <h5>Category Name</h5>   -->
     </td>
     <td>
-      <h5>Quantity Bought</h5>
+      <!-- <h5>Quantity Bought</h5> -->
     </td>
 	</tr>
 {{#products}}
   <tr>
   	<td>
-  		{{SupplierName}}
+  		{{name}}
   	</td>
     <td>
-      {{ProductName}}
+      <!-- {{ProductName}} -->
     </td>
     <td>
-      {{CategoryName}}
+      <!-- {{CategoryName}} -->
     </td>
     <td>
-      {{Quantity}}
+      <!-- {{Quantity}} -->
     </td>
   	<td>
-  		<a href="/Suppliers/edit/{{id}}">Edit</a>
+  		<a href="/suppliers/edit/{{name}}">Edit</a>
   	</td>
   	<td>
-  		<a href="/Suppliers/delete/{{id}}">Delete</a>	
+  		<a href="/suppliers/delete/{{name}}">Delete</a>	
   	</td>
 
   </tr>

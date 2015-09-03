@@ -1,0 +1,22 @@
+<html>
+<head>
+		<title> 
+			<h2>
+				Edit a Supplier
+			</h2>
+		</title>
+				<h2>
+					<center> Edit a Supplier</center>
+					<a href="/">Home</a>
+					
+				</h2>
+</head>
+
+		<body>
+			<form action="/suppliers/edit/{{supplier.id}}" method="post">
+				<input type="text" name="supplier" placeholder="Edit a supplier" value="{{supplier.name}}" /> 
+				<input type="submit" name="submit" value="Submit"/>
+			</form>
+		</body>
+
+</html>

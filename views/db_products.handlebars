@@ -1,7 +1,9 @@
-<h1>Products</h1>
+<center><h1>Products</h1></center>
 
-<a href="products/add">Add Products</a>
-
+		<nav>
+			<a href="products/add">Add Products</a>
+			<a href="/">Home</a>
+		</nav>
 
 
 <table class="table">
@@ -18,18 +20,17 @@
   	</td>
   	<td>{{CategoryName}}</td>
   	<td>
-  		<a href="/Products/edit/{{id}}">Edit</a>
+  		<a href="/products/edit/{{ProductId}}">Edit</a>
   	</td>
   	<td>
-  		<a href="/Products/delete/{{id}}">Delete</a>	
+  		<a href="/products/delete/{{ProductId}}">Delete</a>	
   	</td>
 
   </tr>
 {{/products}}
 </table>
 
-	
-{{#empty}}
+<!--{{#empty}}
   <p>The list is empty.</p>
 {{/empty}}
 
@@ -41,4 +42,4 @@
 		<input type="submit">
 	</form>
 	</table>
-</div>
+</div>-->

@@ -1,0 +1,35 @@
+<html>
+<head>
+		<title> 
+			<h2>
+				Add a Product
+			</h2>
+		</title>
+				<h3>
+					Add a Product
+					<a href="/">Home</a>
+				</h3>
+</head>
+
+		<body>
+			<form action="/products/add" method="post">
+					<h5>Choose a Category before adding/editing a product</h5>
+						<select name="categoryId">
+								  <option value="1">Bakery</option>
+								  <option value="2">Bulk</option>
+								  <option value="3">Canned Food</option>
+								  <option value="4">Cold Beverages</option>
+								  <option value="5">Confectionaries</option>
+								  <option value="6">Cosmetics</option>
+								  <option value="7">Dairy</option>
+								  <option value="8">Fruits</option>
+								  <option value="9">Soup</option>
+								  <option value="10">Valentine Goodies</option>
+						</select>
+						
+					<input type= "text" name= "product" placeholder	="Add a product"/>
+					<input type="submit" name="submit" value="Submit"/>
+			</form>
+		</body>
+
+</html>

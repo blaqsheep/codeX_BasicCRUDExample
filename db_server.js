@@ -179,6 +179,17 @@ app.get('/suppliers/add', function(req, res){
 	res.render('suppliers_add')
 });
 
+app.get('/suppliers/delete/:id', function(req, res){
+	var supplierId = req.params.id;
+			req.getConnection(function(err, connection){
+				connection.query("delete from Suppliers where Id = ?", [supplierId], function(err, results){
+					if (err)
+						console.log(err);					
+					res.redirect('/suppliers');
+				});
+			});
+		});
+
 app.post('/suppliers/add', function(req, res){
 	var data = {name : req.body.supplier};
 
@@ -191,38 +202,40 @@ app.post('/suppliers/add', function(req, res){
 	});
 });
 
-app.get('/suppliers/edit/:id', function(req, res){
-
-	var id = req.params.id;
+app.get('/suppliers/edit/:id', function(req, res, next){
+	var supplierId = req.params.id;
 	// var data = { name : req.body.category};
 	req.getConnection(function(err, connection){
 
-		connection.query("select * Suppliers  where Name = ?", [id], function(err, results){
-
+		connection.query("select *  from Suppliers  where Id = ?", [supplierId], function(err, results){
 			var supplier = results[0];		
-			res.render('/suppliers_edit',{
+			res.render('suppliers_edit',{
 				supplier: supplier
 			});
-					
+
 		});
+
 	});
 
-});
+
 
 app.post('/suppliers/edit/:id', function(req, res){
 
-	var id = req.params.id;
-	var data = { name : req.body.category};
-	req.getConnection(function(err, connection){
-		connection.query("update Suppliers set ? where Name = ?", [data, id], function(err, results){
-			if (err)
-				console.log(err);
-			
-			res.redirect('/suppliers');	
+		var id = req.params.id;
+		var data = { name : req.body.supplier};
+		req.getConnection(function(err, connection){
+			connection.query("update Suppliers set ? where Id = ?", [data, id], function(err, results){
+				if (err)
+					console.log(err);
+				
+				res.redirect('/suppliers');	
+			});
 		});
+
 	});
 
 });
+
 
 app.get('/Purchases', db_purchases.show);
 

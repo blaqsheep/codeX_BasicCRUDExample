@@ -19,6 +19,13 @@
       <h3>Total_Cost</h3>
     </td>
 	</tr>
+
+      <select name="ProductName"> 
+      {{#products}}
+        <option value="ProductId">{{ProductName}}</option>
+      {{/products}} 
+      </select>
+
 {{#products}}
   <tr>
         <td>

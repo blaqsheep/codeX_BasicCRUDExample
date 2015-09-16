@@ -36,9 +36,9 @@ app.use(express.static(__dirname + '/public'));
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //setup the handlers
 app.get('/', db_main.show);
@@ -46,8 +46,18 @@ app.get('/', db_products.show);
 app.get('/products', db_products.show);
 //this is to connect to the web form
 app.get('/products/add', function(req, res){
-	res.render('products_add')
-});
+	
+	req.getConnection(function(err, connection){
+
+		var categoryQuery = "select id, name from Categories";
+			
+			connection.query(categoryQuery, function(err, categories){
+				if (err) return next(err);
+				res.render('products_add', {categories : categories});		
+			});
+
+		});
+	});
 
 app.get('/products/delete/:id', function(req, res){
 	var productId = req.params.id;
@@ -63,24 +73,48 @@ app.get('/products/delete/:id', function(req, res){
 });
 
 app.get('/products/edit/:id', function(req, res){
+
+	var categoryQuery = "select id, name from Categories";
 	var productId = req.params.id;
 	req.getConnection(function(err, connection){
-		connection.query("select * from Products where Id = ?", [productId], function(err, results){
-			var product = results[0];
-			//console.log(err);
-			res.render('product_edit', {
-				product : product
+		
+		connection.query(categoryQuery, function(err, categories){
+			if(err) return next(err);
+			connection.query("select * from Products where Id = ?", [productId], function(err, results){
+
+				var product = results[0];
+
+				var categoryList = categories.map(function(category){
+					return {
+						id : category.id,
+						name : category.name,
+						selected : category.id === product.category_id
+					}
+				});
+
+				res.render('product_edit', {
+					categories : categoryList,
+					product : product
+				});
+
+
 			});
+
 		});
 	});
 });
 
 app.post('/products/edit/:id', function(req, res){
 
+	var categoryQuery = "select id, name from Categories";
 	var id = req.params.id;
-	var data = { name : req.body.product};
+	var data = {
+		category_id : req.body.categoryId, 
+		name : req.body.product
+	};
+	
 	req.getConnection(function(err, connection){
-		connection.query("update Products set ? where Id = ?", [data, id], function(err, results){
+		connection.query("update Products set ? where id= ?", [data, id], function(err, results){
 			if (err)
 				console.log(err);
 			
@@ -109,14 +143,10 @@ app.post('/products/add', function(req, res){
 				});
 
 
-
-
-
-
 app.get('/categories', db_categories.show);
 //rendering the add category handlebars(the web form)
 app.get('/categories/add', function(req, res){
-	res.render('category_add')
+	res.render('category_add');
 });
 
 app.get('/categories/delete/:id', function(req, res){
@@ -176,7 +206,7 @@ app.post('/categories/edit/:id', function(req, res){
 app.get('/suppliers', db_suppliers.show);
 
 app.get('/suppliers/add', function(req, res){
-	res.render('suppliers_add')
+	res.render('suppliers_add');
 });
 
 app.get('/suppliers/delete/:id', function(req, res){
@@ -197,7 +227,7 @@ app.post('/suppliers/add', function(req, res){
 		connection.query("insert into Suppliers set ?", data, function(req, results){
 			if(err)
 				console.log(err);
-			res.redirect('/suppliers')
+			res.redirect('/suppliers');
 		});
 	});
 });
@@ -239,31 +269,37 @@ app.post('/suppliers/edit/:id', function(req, res){
 
 app.get('/Purchases', db_purchases.show);
 
-app.get('/Sales', db_sales.show);
+app.get('/purchases/add', function(req, res){
+	res.render('purchases_add');
+});
 
-// routes will go here
+app.get('/purchases/add', function(req, res){
+	var id = req.params.id;
+	var data = {name : req.body.purchase};
 
+	req.getConnection(function(req,res){
+		connection.query("select * from Purchases where id = ?", [data, id], function(err, results){
+			if(err)
+				console.log(err);
 
-
-
-
-
-
-
-//returns categories from the database
-/*app.get('/categories', function (req, res, next) {
-	req.getConnection(function(err, connection){
-		if (err) 
-			return next(err);
-		
-		connection.query('SELECT * from Categories', [], function(err, results) {
-        	if (err) return next(err);
-
-    		res.send(results);
-      	});
+			res.render('/purchases'); 
+		});
 	});
 });
-*/
+
+app.post('/purchases/add', function(req, res){
+	var data = {name : req.body.purchase};
+
+	req.getConnection(function(err, connection){
+		connection.query("insert into Purchases set ?", data, function(req, results){
+			if(err)
+				console.log(err);
+			res.redirect('/purchases'); 
+		});
+	});
+});
+
+app.get('/Sales', db_sales.show);
 
 // start the server
 app.listen(8080, function (){

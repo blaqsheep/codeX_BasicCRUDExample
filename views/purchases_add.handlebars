@@ -1,0 +1,30 @@
+<html>
+
+		<head>
+			<title>Add purchase</title>
+			<h2><a href="/">Home</a></h2>
+		</head>
+
+		<body>
+			<h2>Add purchase</h2>
+
+
+
+					<table class="table">
+
+						<tr>
+						<td>
+							<h4>ProductName</h4>
+						</td>
+					</tr>
+
+					<select name="ProductName"> 
+						{{#products}}
+				      <option value="ProductId">{{ProductName}}</option>
+					    {{/products}} 
+					</select>
+
+					</table>
+
+		</body>
+</html>

@@ -9,7 +9,7 @@ body {
 #container{
 	margin: 0 auto;
 	width: 95%;
-	height: 600px;
+	height: auto;
 	background-color: #A9A9A9;
 	margin-top: 10px;
 	padding: 5px;

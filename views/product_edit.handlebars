@@ -14,6 +14,17 @@
 
 		<body>
 			<form action="/products/edit/{{product.id}}" method="post">
+				<select name="categoryId"> 
+						{{#categories}}
+							{{^selected}}
+						    	<option value="{{id}}" >{{name}}</option>
+						    {{/selected}}
+						    {{#selected}}
+						    	<option value="{{id}}" selected>{{name}}</option>
+						    {{/selected}}
+						{{/categories}} 
+					</select>
+
 				<input type="text" name="product" placeholder="Edit a product" value="{{product.name}}" /> 
 				<input type="submit" name="submit" value="Submit"/>
 			</form>

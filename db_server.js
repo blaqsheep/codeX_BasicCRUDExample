@@ -267,10 +267,26 @@ app.post('/suppliers/edit/:id', function(req, res){
 });
 
 
-app.get('/Purchases', db_purchases.show);
+app.get('/purchases', db_purchases.show);
 
 app.get('/purchases/add', function(req, res){
-	res.render('purchases_add');
+     
+     req.getConnection(function(err, connection){
+
+		var productsQuery = "select id, name from Products";
+		var suppliersQuery = "select id, name from Suppliers";
+			
+			connection.query(productsQuery, function(err, products){
+			connection.query(suppliersQuery, function(err, suppliers){
+				if (err) return next(err);
+				res.render('purchases_add', {products : products ,suppliers : suppliers});	
+				//res.render('purchases_add', {suppliers : suppliers});		
+			});
+
+		});
+	});
+
+	//res.render('purchases_add');
 });
 
 app.get('/purchases/add', function(req, res){
@@ -285,7 +301,8 @@ app.get('/purchases/add', function(req, res){
 			res.render('/purchases'); 
 		});
 	});
-});
+  });
+
 
 app.post('/purchases/add', function(req, res){
 	var data = {name : req.body.purchase};

@@ -1,8 +1,8 @@
 <h1>Purchases</h1>
 
+<center><nav><a href="purchases/add">Add Purchase</a>
+<a href="/">Home</a></nav></center>
 
-<a href="purchases/add">Add Purchase</a>
-<a href="/">Home</a>
 
 <table class="table">
 	<tr>
@@ -20,13 +20,8 @@
     </td>
 	</tr>
 
-      <select name="ProductName"> 
-      {{#products}}
-        <option value="ProductId">{{ProductName}}</option>
-      {{/products}} 
-      </select>
-
-{{#products}}
+     
+{{#purchases}}
   <tr>
         <td>
       {{ProductName}}
@@ -48,5 +43,5 @@
   	</td>
 
   </tr>
-{{/products}}
+{{/purchases}}
 </table>

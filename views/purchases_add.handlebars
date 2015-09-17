@@ -1,30 +1,43 @@
 <html>
 
 		<head>
-			<title>Add purchase</title>
-			<h2><a href="/">Home</a></h2>
+			<nav>
+				<title>Add purchase</title>
+				<h2>Add a purchase</h2>
+				<a href="/">Home</a>
+				<a href="/purchases">Baq</a>
+			</nav>
+			
 		</head>
 
 		<body>
-			<h2>Add purchase</h2>
 
+		<!-- var result = mysql_query("select * from Categories"); -->
+		
+			<form action="/purchases/add" method="post">
+					<h3>Choose a product before adding a purchase</h3>
 
-
-					<table class="table">
-
-						<tr>
-						<td>
-							<h4>ProductName</h4>
-						</td>
-					</tr>
-
-					<select name="ProductName"> 
+					<select name="ProductName" label="Choose Product"> 
+						<option selected disabled>Choose Product</option>
 						{{#products}}
-				      <option value="ProductId">{{ProductName}}</option>
-					    {{/products}} 
+						    <option value="{{id}}" >{{name}}</option>
+						{{/products}} 
 					</select>
 
-					</table>
+					<select name="SupplierName"> 
+						<option selected disabled>Choose Supplier</option>
+						{{#suppliers}}
+						    <option value="{{id}}" >{{name}}</option>
+						{{/suppliers}} 
+					</select>
 
+						
+					<input type="number" name="quantity" min="0" max="1000" value="quantity"placeholder="quantity">
+					<input type="number" name="noSold" min="0" max="1000" placeholder="No. Sold">
+					<!-- <input type= "text" name= "purchase" placeholder	="Add a purchase"/> -->
+					<input type="submit" name="submit" value="Submit"/>
+
+			</form>
 		</body>
+
 </html>

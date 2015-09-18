@@ -5,8 +5,7 @@ exports.show = function (req, res, next) {
 
         var productsQuery = "select id, name from Products";
         var suppliersQuery = "select id, name from Suppliers";
-		var Query = "select Products.name as ProductName, Suppliers.name as SupplierName, stock_purchases_csv.quantity as Quantity , stock_purchases_csv.total_cost as Total_Cost from stock_purchases_csv  inner join Products on stock_purchases_csv.item = Products.name inner join Suppliers on Suppliers.name = stock_purchases_csv.shop";
-
+		var Query = "select Products.name as ProductName, Suppliers.name as SupplierName, Purchases.quantity as Quantity , Purchases.cost_price as Total_Cost from  Purchases  inner join Products on Purchases.product_id = Products.id inner join Suppliers on Suppliers.id = Purchases.supplier_id";
 
 		connection.query(productsQuery, function(err, products) {
 			if (err) return next(err);

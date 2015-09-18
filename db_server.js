@@ -289,23 +289,31 @@ app.get('/purchases/add', function(req, res){
 	//res.render('purchases_add');
 });
 
-app.get('/purchases/add', function(req, res){
-	var id = req.params.id;
-	var data = {name : req.body.purchase};
+// app.get('/purchases/add', function(req, res){
+// 	var id = req.params.id;
+// 	var data = {name : req.body.purchase};
 
-	req.getConnection(function(req,res){
-		connection.query("select * from Purchases where id = ?", [data, id], function(err, results){
-			if(err)
-				console.log(err);
+// 	req.getConnection(function(req,res){
+// 		connection.query("select * from Purchases where id = ?", [data, id], function(err, results){
+// 			if(err)
+// 				console.log(err);
 
-			res.render('/purchases'); 
-		});
-	});
-  });
+// 			res.render('/purchases'); 
+// 		});
+// 	});
+//   });
 
 
 app.post('/purchases/add', function(req, res){
-	var data = {name : req.body.purchase};
+
+	console.log(req.body);
+
+	var data = {
+		supplier_id : req.body.supplier_id,
+		product_id : req.body.product_id,
+		quantity : req.body.quantity,
+		cost_price : req.body.cost_price
+	};
 
 	req.getConnection(function(err, connection){
 		connection.query("insert into Purchases set ?", data, function(req, results){
@@ -313,6 +321,22 @@ app.post('/purchases/add', function(req, res){
 				console.log(err);
 			res.redirect('/purchases'); 
 		});
+	});
+});
+
+app.get('/purchases/edit/', function(req, res, next){
+	var purchaseId = req.params.id;
+	// var data = { name : req.body.category};
+	req.getConnection(function(err, connection){
+
+		connection.query("select *  from Purchases  where Id = ?", [purchaseId], function(err, results){
+			var purchase = results[0];		
+			res.render('purchases_edit',{
+				purchase: purchase
+			});
+
+		});
+
 	});
 });
 

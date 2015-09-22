@@ -292,6 +292,7 @@ app.get('/purchases/add', function(req, res){
 // app.get('/purchases/add', function(req, res){
 // 	var id = req.params.id;
 // 	var data = {name : req.body.purchase};
+// 	console.log(id)
 
 // 	req.getConnection(function(req,res){
 // 		connection.query("select * from Purchases where id = ?", [data, id], function(err, results){
@@ -324,20 +325,98 @@ app.post('/purchases/add', function(req, res){
 	});
 });
 
-app.get('/purchases/edit/', function(req, res, next){
+// app.get('/purchases/edit/', function(req, res, next){
+// 	var purchaseId = req.params.id;
+
+// 	// var data = { name : req.body.category};
+// 	req.getConnection(function(err, connection){
+
+// 		connection.query("select *  from Purchases  where Id = ?", [purchaseId], function(err, results){
+// 			var purchase = results[0];		
+// 			res.render('purchases_edit',{
+// 				purchase: purchase
+// 			});
+
+// 		});
+
+// 	});
+// });
+
+app.get('/purchases/edit/:id', function(req, res){
+
+	var productsQuery = "select id, name from Products";
+	var suppliersQuery = "select id, name from Suppliers";
 	var purchaseId = req.params.id;
-	// var data = { name : req.body.category};
-	req.getConnection(function(err, connection){
 
-		connection.query("select *  from Purchases  where Id = ?", [purchaseId], function(err, results){
-			var purchase = results[0];		
-			res.render('purchases_edit',{
-				purchase: purchase
+	// console.log(purchaseId);
+	// console.log(productsQuery);
+
+		req.getConnection(function(err, connection){
+
+			connection.query(productsQuery, function(err, products){
+
+				connection.query(suppliersQuery, function(err, suppliers){
+					if(err) return next(err);
+
+					connection.query("select *  from Purchases  where Id = ?", [purchaseId], function(err, results){
+						
+						console.log("**************************************************");
+						console.log("**************************************************");
+
+						var purchase = results[0];
+
+						var productList = products.map(function(product){
+							return{
+								id : product.id,
+								name : product.name,
+								selected : product.id === purchase.product_id
+							}
+						});
+
+						console.log(productList);
+
+						var	supplierList = suppliers.map(function(supplier){
+							return {
+								id : supplier.id,
+								name : supplier.name,
+								selected : supplier.id === purchase.supplier_id
+							}
+						});
+
+						res.render('purchases_edit', {
+
+								products : productList,
+								suppliers : supplierList,
+								purchase : purchase
+							});
+
+				})
+				
+				
+
+						// console.log(suppliers);
+
+						// console.log(supplierList)
+
+					
+				});
 			});
-
 		});
+});
 
+app.post('/purchases/edit/:id', function(req, res){
+
+	var id = req.params.id;
+	var data = { name : req.body.purchase};
+	req.getConnection(function(err, connection){
+		connection.query("update Purchases set ? where Id = ?", [data, id], function(err, results){
+			if (err)
+				console.log(err);
+			
+			res.redirect('/purchases');	
+		});
 	});
+
 });
 
 app.get('/Sales', db_sales.show);

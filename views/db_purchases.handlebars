@@ -16,18 +16,18 @@
       <h3>Quantity</h3>
     </td>
     <td>
-      <h3>Total_Cost</h3>
+      <h3>Cost Price</h3>
     </td>
 	</tr>
 
      
-{{purchases}}
+{{#purchases}}
   <tr>
         <td>
-      {{products}}
+      {{ProductName}}
         </td>
       	<td>
-  		{{suppliers}}
+  		{{SupplierName}}
   	   </td>
         <td>
       {{Quantity}}
@@ -36,12 +36,12 @@
       {{Total_Cost}}
        </td>
   	<td>
-  		<a href="/Purchases/edit/{{id}}">Edit</a>
+  		<a href="/purchases/edit/{{id}}">Edit</a>
   	</td>
   	<td>
-  		<a href="/Purchases/delete/{{id}}">Delete</a>	
+  		<a href="/purchases/delete/{{id}}">Delete</a>	
   	</td>
 
   </tr>
-{{purchases}}
+{{/purchases}}
 </table>

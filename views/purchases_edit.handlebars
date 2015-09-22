@@ -14,32 +14,43 @@
 
 		<!-- var result = mysql_query("select * from Categories"); -->
 		
-			<form action="/purchases/add" method="post">
-					<h3>Choose a product before editing a purchase</h3>
+			<form action="/purchases/edit/{{purchase.id}}" method="post">
+					<h3>Choose a product and supplier before editing a purchase</h3>
 
-					<select name="ProductName" label="Choose Product"> 
+                <input type="number" name="quantity" min="0" max="1000" value="{{purchase.quantity}}" placeholder="quantity">
 
-						<option selected disabled>Choose Product</option>
-
+					<select name="product_id" label="Choose Product"> 
 						{{#products}}
-						    <option value="{{id}}" >{{name}}</option>
-						{{/products}} 
+								{{^selected}}
+								<option value="{{id}}">{{name}}</option>
+								{{/selected}}
 
+								{{#selected}}
+								<option value="{{id}}" selected>{{name}}</option>
+								{{/selected}}
+						{{/products}}
 					</select>
 
-					<select name="SupplierName"> 
-
-						<option selected disabled>Choose Supplier</option>
-
+					<select name="supplier_id" label="Choose a Supplier"> 
 						{{#suppliers}}
-						    <option value="{{id}}" >{{name}}</option>
+								{{^selected}}
+								    <option value="{{id}}" >{{name}}</option>
+								{{/selected}}
+								
+								{{#selected}}
+						    		<option value="{{id}}" selected>{{name}}</option>
+						    	{{/selected}}
+
 						{{/suppliers}} 
+
 						
+						
+					
 					</select>
 
 						
-					<input type="number" name="quantity" min="0" max="1000" value="quantity"placeholder="quantity">
-					<input type="number" name="noSold" min="0" max="1000" placeholder="No. Sold">
+					
+					<input type="currency" name="noSold" min="0.00" max="1000.00" value="{{purchase.cost_price}}" placeholder="No. Sold">
 					<!-- <input type= "text" name= "purchase" placeholder	="Add a purchase"/> -->
 					<input type="submit" name="submit" value="Submit"/>
 

@@ -4,5 +4,3 @@ insert into Purchases(product_id, quantity,supplier_id, cost_price)
 	from  Products, stock_purchases_csv, Suppliers
 
 	;
-
-

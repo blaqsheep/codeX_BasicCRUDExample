@@ -392,6 +392,19 @@ console.log(data)
 
 });
 
+app.get('/purchases/delete/:id', function(req, res){
+	var purchaseId = req.params.id;
+	req.getConnection(function(err, connection){
+
+		connection.query("delete from Purchases where Id = ?", [purchaseId], function(err, results){
+			if(err)
+				console.log(err);
+
+				res.redirect('/purchases');
+		});
+	});
+});
+
 app.get('/Sales', db_sales.show);
 
 // start the server

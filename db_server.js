@@ -407,6 +407,43 @@ app.get('/purchases/delete/:id', function(req, res){
 
 app.get('/Sales', db_sales.show);
 
+app.get('/sales/add', function(req,res, next){
+
+	req.getConnection(function(err, connection){
+		var products = "select id, name from Products";
+		var sales = "select no_sold, selling_price from Sales";
+
+			connection.query(products, function(err, products){
+				connection.query(sales, function(err, sales){
+					if(err) return next(err);
+
+					res.render('sales_add', {products : products, sales : sales});
+				});
+			});
+	});
+
+	app.post('/sales/add', function(req, res){
+		var	data = {
+			date : req.body.date,
+			product_id : req.body.products_id,
+			no_sold : req.body.no_sold,
+			selling_price : req.body.selling_price
+		}
+		console.log(req.body);
+		console.log(data);
+
+		req.getConnection(function(err, connection){
+			connection.query("insert into Sales set ?", data, function(err, results){
+				if(err)
+					console.log(err);
+
+				res.redirect('/sales');
+			});
+		});
+	});
+});
+
+
 // start the server
 app.listen(8080, function (){
 	console.log('Server started! At http://localhost: 8080');

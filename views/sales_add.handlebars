@@ -1,0 +1,29 @@
+<html>
+
+<head> <title>Add Sales</title></head>
+
+<body>
+	<h1>Add Sales</h1>
+
+		<form action="/sales/add" method="post">
+
+			<input type="date" name="date" number="date_format" placeholder="date_format"/>
+
+			<select name="products_id" label="Choose Product">
+				{{#products}}
+					<option value="{{id}}">{{name}}</option>
+				{{/products}}
+			</select>
+
+			<input type="number" name="no_sold" placeholder="no_sold"/>
+			<!-- <input type="number" name="fish" -->
+			<input type="number" name="selling_price" placeholder="selling_Price"/>
+			<input type="submit" name="submit" value="submit"/>
+
+			
+
+		</form>
+</body>
+
+
+</html>

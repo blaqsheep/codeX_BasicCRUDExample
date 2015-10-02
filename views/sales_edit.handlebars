@@ -1,0 +1,46 @@
+<html>
+
+<head> <title>Edit Sales</title>
+
+	<nav>
+		<h2>Edit Sales</h2>
+		<a href="/">Home</a>
+		<a href="/sales">Baq</a>
+	</nav>
+</head>
+
+
+<body>
+	
+
+		<form action="/sales/edit/{{sales.id}}" method="post">
+
+
+			<input type="text" name="Date" placeholder="date_format" value="{{sale.Date}}"/>
+
+			<select name="product_id" label="Choose Product">
+
+				{{#products}}
+
+					{{^selected}}
+					<option value="{{id}}">{{name}}</option>
+					{{/selected}}
+
+					{{#selected}}
+					<option value="{{id}}" selected>{{name}}</option>
+					{{/selected}}
+
+				{{/products}}
+			</select>
+
+			<input type="number" name="no_sold" value="{{sale.no_sold}}"/>
+			<input type="number" name="selling_price" value="{{sale.selling_price}}"/>
+			<input type="submit" name="submit" value="submit"/>
+
+			
+
+		</form>
+</body>
+
+
+</html>

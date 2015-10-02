@@ -107,6 +107,7 @@ app.get('/products/edit/:id', function(req, res){
 app.post('/products/edit/:id', function(req, res){
 
 	var categoryQuery = "select id, name from Categories";
+
 	var id = req.params.id;
 	var data = {
 		category_id : req.body.categoryId, 
@@ -405,7 +406,7 @@ app.get('/purchases/delete/:id', function(req, res){
 	});
 });
 
-app.get('/Sales', db_sales.show);
+app.get('/sales', db_sales.show);
 
 app.get('/sales/add', function(req,res, next){
 
@@ -422,7 +423,7 @@ app.get('/sales/add', function(req,res, next){
 			});
 	});
 
-	app.post('/sales/add', function(req, res){
+app.post('/sales/add', function(req, res){
 		var	data = {
 			date : req.body.date,
 			product_id : req.body.products_id,
@@ -439,6 +440,89 @@ app.get('/sales/add', function(req,res, next){
 
 				res.redirect('/sales');
 			});
+		});
+	});
+});
+
+app.get('/sales/edit/:id', function(req, res, next){
+	var productsQuery = "select id, name from Products";
+	var saleQuery = "select date_format(Sales.date, '%e-%M-%Y') as Date, Sales.id, Products.name as ProductName, Sales.no_sold as SoldNumber, Sales.selling_price as SellingPrice from Sales inner join Products on Sales.product_id = Products.id inner join Categories on Categories.id = Products.category_id";
+	var	 product_Id = req.params.id;
+
+		req.getConnection(function(err, connection){
+			connection.query(productsQuery, function(err, products){
+				connection.query(saleQuery, function(err, sales){
+					if (err) return next(err);
+
+						connection.query("select id, date_format(date, '%Y/%c/%e') as Date, product_id, no_sold, selling_price from Sales where Id = ?",[product_Id], function(err, results){
+							var	sale = results[0];
+
+							var productList = products.map(function(product){
+								return {
+									id : product.id,
+									name : product.name,
+									selected : product.id === sale.product_id
+								};
+							});
+
+							// console.log("+++++++++++")
+							// console.log(productList);
+							var saleList = sales.map(function(sale){
+								return {
+									date : sale.Date,
+									name : sale.ProductName,
+									no_sold : sale.SoldNumber,
+									selling_price : sale.SellingPrice
+								}
+								
+							});
+
+							//	
+							res.render('sales_edit', {
+								products : productList,
+								sale : sale
+							});
+
+						});
+				});
+			});
+		});
+});
+
+app.post('/sales/edit/:id', function(req ,res){
+	console.log(req.body);
+
+	var productsQuery = "select id, name from Products";
+	var saleQuery = "select id, date_format(date ,'%Y/%c%/e') as Date, product_id, no_sold, SellingPrice from Sales where Id = ?";
+
+		var id = req.params.id;
+		var data = {
+			date : req.body.Date,
+			product_id : req.body.product_id,
+			no_sold : req.body.no_sold,
+			selling_Price : req.body.selling_Price
+		}
+
+		req.getConnection(function(err, connection){
+			connection.query("update Sales set ? where Id = ?", [data, id], function(err, results){
+				if (err)
+					console.log(err);
+
+				res.redirect('/sales');
+			});
+		});
+
+});
+
+app.get('/sales/delete/:id', function(req, res){
+	var productId = req.params.id;
+	req.getConnection(function(err, connection){
+
+		connection.query("delete from Sales where Id = ?", [productId], function(err, results){
+			if(err)
+				console.log(err);
+
+				res.redirect('/sales');
 		});
 	});
 });
